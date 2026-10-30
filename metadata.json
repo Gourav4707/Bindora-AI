@@ -1,0 +1,6 @@
+{
+  "name": "Bindora",
+  "description": "AI-powered personal finance and money management for college students and young adults. Every Rupee Has a Purpose.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

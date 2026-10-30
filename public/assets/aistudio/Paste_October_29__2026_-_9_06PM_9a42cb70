@@ -1,0 +1,1231 @@
+# PROJECT: STUDENT FINANCE MENTOR
+
+## 1. YOUR ROLE
+
+Act as a senior full-stack engineer, mobile application architect, UI/UX designer, AI engineer, database architect, QA engineer, and application security specialist.
+
+Build a functional, maintainable, secure, production-oriented mobile application called "Student Finance Mentor."
+
+Do not merely create a UI mockup, landing page, prototype with fake buttons, or static dashboard.
+
+Implement a working application with real authentication, persistent database storage, functional navigation, validated forms, working calculations, meaningful error states, and backend-integrated AI functionality.
+
+Work incrementally. Inspect the existing repository before making changes. If the repository is empty, initialize the project using the architecture defined below.
+
+Make sensible technical decisions independently. Ask questions only when a decision genuinely blocks implementation.
+
+Never claim that a feature is complete unless its implementation and relevant tests have been verified.
+
+---
+
+# 2. PRODUCT VISION
+
+Student Finance Mentor is an AI-powered personal finance and financial literacy application designed primarily for Indian college students, hostel residents, freshers, and young adults aged 16–23.
+
+The application helps users:
+
+- Track pocket money and daily expenses.
+- Create monthly budgets.
+- Understand spending patterns.
+- Develop consistent saving habits.
+- Manage education loan repayment scenarios.
+- Learn personal finance through interactive lessons.
+- Understand investing without risking real money.
+- Ask financial questions in natural Hindi, English, or Hinglish.
+
+Core product principle:
+
+"Help students make better financial decisions, not simply record transactions."
+
+The application must be beginner-friendly, practical, privacy-conscious, accessible, and mobile-first.
+
+The product must not execute actual investments, transfer money, issue loans, or represent educational simulations as real financial products.
+
+---
+
+# 3. TARGET USERS AND USE CASES
+
+Primary users:
+- Indian college students.
+- Students living in hostels or PG accommodation.
+- Students receiving monthly pocket money.
+- Fresh graduates starting their first jobs.
+- Young adults learning personal finance.
+
+Example user scenarios:
+
+1. A student receives ₹4,000 every month and wants to save ₹800.
+2. A hostel resident wants to understand why food expenses are increasing.
+3. A student wants an alert when 80% of the food budget has been used.
+4. A borrower wants to estimate education loan EMI and total interest.
+5. A beginner wants to learn SIPs and compound interest.
+6. A student wants to practise investing using virtual money.
+7. A user asks the AI coach a question in Hinglish.
+
+All examples must use Indian rupees and the Asia/Kolkata timezone by default.
+
+Support localization-ready architecture. English can be the initial interface language, while the AI coach must understand Hindi, English, and Hinglish.
+
+---
+
+# 4. REQUIRED TECHNOLOGY STACK
+
+## Mobile frontend
+
+- React Native.
+- Expo.
+- TypeScript with strict mode.
+- Expo Router.
+- React Hook Form.
+- Zod validation.
+- A consistent component library using NativeWind or an equivalent maintainable styling system.
+- TanStack Query for server-state management.
+- Zustand only where lightweight client-side state is useful.
+- A maintained React Native-compatible chart library.
+- Expo SecureStore where appropriate for secure local credential storage.
+- Expo Notifications for local or remote notifications where supported.
+
+Choose compatible package versions. Do not blindly install outdated or incompatible packages.
+
+## Backend
+
+- Python 3.12 or another currently supported version compatible with selected dependencies.
+- FastAPI.
+- Pydantic v2.
+- SQLAlchemy 2.x.
+- Alembic migrations.
+- PostgreSQL.
+- Supabase Auth for identity management.
+- OpenAI API for AI-powered coaching.
+- Pytest for backend testing.
+
+## Infrastructure
+
+- Supabase PostgreSQL.
+- Supabase Auth.
+- A separately deployable FastAPI service.
+- Expo EAS for mobile builds.
+- Environment variables for all credentials and environment-specific settings.
+
+Use pinned dependency versions and reproducible installation instructions.
+
+Before implementation, verify compatibility with the existing project and current official documentation when external documentation access is available.
+
+Do not introduce unnecessary infrastructure or microservices.
+
+---
+
+# 5. APPLICATION DESIGN SYSTEM
+
+Create a distinctive, polished fintech design system.
+
+## Visual direction
+
+The interface should feel:
+
+- Modern.
+- Trustworthy.
+- Calm.
+- Friendly to students.
+- Premium without being overly corporate.
+- Easy to navigate on smaller Android phones.
+
+Use:
+- Warm off-white backgrounds.
+- Deep navy or dark slate text.
+- Emerald or teal as the primary financial accent.
+- Soft blue for informational elements.
+- Muted orange for warnings.
+- Red only for errors or genuinely concerning financial conditions.
+- Rounded cards with restrained shadows.
+- Clear typography and generous spacing.
+- Consistent icons.
+- Subtle animations that do not compromise performance.
+
+Avoid:
+- Generic AI landing page aesthetics.
+- Black-and-purple gradients everywhere.
+- Excessive glassmorphism.
+- Excessive animations.
+- Tiny unreadable charts.
+- Fake financial figures presented as real user data.
+- Excessive gradients and decorative elements.
+- Buttons that look interactive but do nothing.
+
+Create reusable design tokens for colors, spacing, typography, border radii, shadows, and component sizes.
+
+Provide light and dark themes if feasible without delaying core functionality. Light mode is the initial default.
+
+Follow accessible contrast standards and provide meaningful labels for interactive controls.
+
+---
+
+# 6. APPLICATION NAVIGATION
+
+Implement the following primary navigation:
+
+1. Home
+2. Budget
+3. Learn
+4. AI Coach
+5. Profile
+
+Use an appropriate mobile navigation pattern, such as a bottom tab bar.
+
+Secondary screens should be reachable through clear navigation.
+
+Required screens:
+
+- Splash/loading screen.
+- Onboarding.
+- Sign up.
+- Sign in.
+- Password recovery.
+- Home dashboard.
+- Add expense.
+- Edit expense.
+- Transaction history.
+- Transaction details.
+- Budget overview.
+- Create/edit budget.
+- Budget category details.
+- Savings goals.
+- Create/edit savings goal.
+- AI Money Coach.
+- Financial education library.
+- Lesson details.
+- Quiz.
+- Loan calculator.
+- Loan repayment scenarios.
+- Paper trading simulator.
+- Portfolio and virtual transaction history.
+- Notifications.
+- Profile.
+- Settings.
+- Privacy and data controls.
+- Help and financial disclaimers.
+
+Do not implement all advanced screens as empty placeholders. Complete the MVP first, then implement advanced modules incrementally.
+
+---
+
+# 7. AUTHENTICATION AND ONBOARDING
+
+Implement working authentication through Supabase Auth.
+
+Required functionality:
+
+- Email and password registration.
+- Sign in.
+- Sign out.
+- Password reset.
+- Session restoration.
+- Authentication state handling.
+- Protected screens.
+- Secure handling of credentials and tokens.
+- Appropriate loading, success, and error states.
+
+During onboarding, collect only information needed to personalize the application.
+
+Possible fields:
+
+- Display name.
+- Preferred language.
+- Monthly pocket money or income.
+- Approximate fixed monthly expenses.
+- Primary financial goal.
+- Optional student status.
+- Optional currency preference, initially INR.
+
+Do not collect unnecessary identity documents, bank credentials, or sensitive financial information.
+
+Users must be able to skip optional onboarding fields and update preferences later.
+
+Do not expose the Supabase service-role key or OpenAI API key in the mobile application.
+
+If a profile is incomplete, guide the user to complete it without making the application unusable.
+
+---
+
+# 8. HOME DASHBOARD
+
+Create a personalized dashboard with the following sections.
+
+## A. Financial overview
+
+Display:
+- Available budget balance.
+- Total expenses this month.
+- Monthly budget.
+- Remaining budget.
+- Savings goal progress.
+
+Clearly distinguish the remaining budget from the actual bank balance.
+
+Do not claim to know a user's bank balance unless the user has explicitly provided the information or a properly authorized integration supplies it.
+
+## B. Spending overview
+
+Show:
+- Expense breakdown by category.
+- Weekly spending trend.
+- Monthly spending trend.
+- Recent transactions.
+- Highest spending categories.
+
+Use real data from the authenticated user's account.
+
+For a new user, display an attractive empty state with a clear "Add your first expense" action.
+
+Never silently populate a new user's financial account with fabricated transactions.
+
+## C. Smart insights
+
+Generate deterministic insights from available data.
+
+Examples:
+- "You have used 80% of your food budget."
+- "Your travel expenses increased by 15% compared with the previous comparable period."
+- "At your current spending rate, you may exceed your monthly budget."
+
+Only display comparisons when sufficient data exists.
+
+Clearly distinguish measured historical facts from estimates and predictions.
+
+Avoid making confident predictions from insufficient transaction history.
+
+## D. Quick actions
+
+Include:
+- Add Expense.
+- View Budget.
+- Ask AI Coach.
+- Create Savings Goal.
+
+Every action must navigate to a functional screen.
+
+---
+
+# 9. EXPENSE TRACKER
+
+Build a fully functional expense management module.
+
+## Transaction fields
+
+- Transaction ID.
+- Authenticated user ID.
+- Amount.
+- Currency.
+- Transaction type.
+- Category.
+- Optional subcategory.
+- Merchant or description.
+- Transaction date.
+- Optional notes.
+- Creation timestamp.
+- Updated timestamp.
+
+Support expense and income transactions.
+
+Initial categories:
+
+Expenses:
+- Food.
+- Canteen.
+- Groceries.
+- Travel.
+- Education.
+- Books.
+- Accommodation.
+- Shopping.
+- Entertainment.
+- Mobile and Internet.
+- Health.
+- Other.
+
+Income:
+- Pocket Money.
+- Salary.
+- Freelance Income.
+- Scholarship.
+- Other Income.
+
+Allow users to customize categories if this can be implemented cleanly.
+
+## Required functionality
+
+- Create transaction.
+- Edit transaction.
+- Delete transaction with confirmation.
+- Transaction history.
+- Search.
+- Category filters.
+- Date filters.
+- Sorting.
+- Pagination or efficient incremental loading.
+- Monthly totals.
+- Category totals.
+- Input validation.
+- Duplicate-submit prevention.
+
+Use proper numeric and currency handling. Never use binary floating-point arithmetic for authoritative monetary calculations when decimal arithmetic is appropriate.
+
+Store transaction timestamps consistently and handle date boundaries correctly.
+
+The user must be able to correct an automatically suggested category.
+
+## Smart categorization
+
+Implement a basic rule-based categorization service first.
+
+If AI-assisted categorization is enabled, call the backend and validate the model's suggested category against the user's permitted categories.
+
+AI categorization must never create a transaction without explicit user confirmation.
+
+If the AI service is unavailable, manual transaction entry must continue working.
+
+---
+
+# 10. BUDGET MANAGEMENT
+
+Allow users to create monthly budgets.
+
+Each budget should support:
+- Total monthly limit.
+- Category-specific limits.
+- Month and year.
+- Start and end dates where appropriate.
+- Optional rollover policy, disabled by default.
+
+Calculate:
+- Total spending.
+- Remaining budget.
+- Percentage consumed.
+- Spending by category.
+- Average daily spending.
+- Estimated end-of-month spending when sufficient data exists.
+
+## Alert thresholds
+
+Support configurable alerts at:
+- 50%.
+- 80%.
+- 100%.
+- More than 100%.
+
+Prevent repeated alerts for the same threshold crossing.
+
+The backend should determine threshold crossings using transaction and budget data rather than trusting client-side calculations.
+
+Support in-app notifications initially. Add push notifications only when their setup is complete and tested.
+
+A user must be able to change notification preferences.
+
+---
+
+# 11. SAVINGS GOALS
+
+Allow users to create savings goals such as:
+
+- Laptop.
+- Emergency fund.
+- College fees.
+- Travel.
+- Books.
+- Personal purchases.
+
+Goal fields:
+- Goal name.
+- Target amount.
+- Current saved amount.
+- Optional target date.
+- Priority.
+- Status.
+
+Features:
+- Create, edit, and archive goals.
+- Progress bar.
+- Amount remaining.
+- Suggested weekly or monthly savings.
+- Goal completion notification.
+
+Savings projections must state their assumptions.
+
+Do not automatically move money between accounts or represent an internal savings goal as a real bank deposit.
+
+If users can manually record contributions, validate them and maintain a consistent contribution history.
+
+---
+
+# 12. AI PERSONAL FINANCE COACH
+
+Build a conversational financial education assistant.
+
+The assistant must support natural Hindi, English, and Hinglish.
+
+Example questions:
+- "Mere ₹2,000 pocket money mein se ₹500 kaise save karun?"
+- "Mera food budget itni jaldi kyun khatam ho raha hai?"
+- "SIP kya hota hai?"
+- "Education loan par interest kaise calculate hota hai?"
+- "Credit score kya hota hai?"
+
+## Architecture
+
+All AI requests must go through FastAPI.
+
+The backend must:
+1. Authenticate the user.
+2. Validate request size and message format.
+3. Apply rate limits.
+4. Retrieve only the minimum financial context necessary.
+5. Remove unnecessary sensitive information.
+6. Call the configured AI provider.
+7. Validate and format the response.
+8. Return a safe, understandable answer.
+9. Handle provider failures and timeouts.
+
+Never send another user's transactions or profile data to the AI model.
+
+Do not trust instructions embedded in transaction descriptions or other user-generated financial records.
+
+## Context-aware coaching
+
+When explicitly authorized and relevant, the coach may use:
+- Current monthly budget.
+- Spending totals.
+- Category breakdown.
+- Savings goals.
+- User-selected financial priorities.
+
+Provide transparent explanations of which financial data informs a recommendation.
+
+Do not expose the entire transaction history when a monthly category total is sufficient.
+
+## AI behavior
+
+The coach should:
+- Explain financial concepts in simple language.
+- Offer practical budgeting guidance.
+- Encourage emergency savings.
+- Explain the assumptions behind calculations.
+- Avoid shame, pressure, and manipulative language.
+- Clearly distinguish facts, estimates, and suggestions.
+- Never guarantee investment returns.
+- Never invent transaction data.
+- Never pretend to be a bank, financial adviser, or regulated financial institution.
+- Avoid personalized buy/sell recommendations for specific securities.
+- Refuse to facilitate fraud or financial abuse.
+- Recommend professional assistance for complex legal, tax, or financial circumstances when appropriate.
+
+## Response format
+
+Use a structured response where appropriate:
+
+- Short answer.
+- Explanation.
+- Suggested next steps.
+- Relevant assumptions.
+- Educational disclaimer when necessary.
+
+Keep conversational responses concise unless the user asks for detail.
+
+## Reliability
+
+Support:
+- Request timeouts.
+- Retry policies for transient errors where safe.
+- Graceful provider failures.
+- Usage limits.
+- Per-user rate limiting.
+- Token and cost monitoring.
+- A configurable model identifier.
+- Mock AI responses for automated tests.
+
+Do not silently fabricate an AI answer when the provider fails.
+
+Never expose API keys or internal stack traces to the client.
+
+---
+
+# 13. EDUCATION LOAN CALCULATOR
+
+Implement a deterministic education loan calculator.
+
+Input fields:
+- Principal amount.
+- Annual interest rate.
+- Repayment tenure.
+- Optional moratorium period.
+- Optional simple or compound interest assumptions where applicable.
+- Optional repayments during the moratorium.
+- Repayment commencement date.
+
+Output:
+- Estimated outstanding principal.
+- Estimated interest accrued.
+- EMI.
+- Total repayment.
+- Total estimated interest.
+- Amortization schedule.
+- Outstanding balance over time.
+
+Use mathematically correct formulas and decimal arithmetic.
+
+For a standard amortizing loan with monthly rate r, principal P, and n monthly payments:
+
+EMI = P × r × (1 + r)^n / ((1 + r)^n - 1)
+
+Handle a zero-interest rate separately to avoid division by zero.
+
+If the monthly rate is zero, EMI equals principal divided by the number of payments.
+
+For a moratorium, explicitly define the assumed interest accrual and capitalization rules.
+
+Do not imply that one generic moratorium model applies to every Indian education loan.
+
+Clearly label outputs as estimates, not official bank quotations.
+
+Provide a way to compare repayment scenarios, including:
+- Different tenures.
+- Different interest rates.
+- Voluntary payments during the study period.
+- Additional repayments where the model supports them.
+
+Never recommend making extra loan repayments without considering the user's emergency fund and necessary living expenses.
+
+Do not scrape or fabricate live bank interest rates. If current rates are unavailable, require user-provided inputs.
+
+---
+
+# 14. FINANCIAL EDUCATION ACADEMY
+
+Build an educational learning module.
+
+Initial topics:
+1. Budgeting basics.
+2. Needs versus wants.
+3. Emergency funds.
+4. Inflation.
+5. Simple interest.
+6. Compound interest.
+7. Saving versus investing.
+8. Mutual fund basics.
+9. SIP basics.
+10. Equity market basics.
+11. Credit scores.
+12. Responsible borrowing.
+13. Education loan fundamentals.
+14. Financial scams and fraud prevention.
+
+Each lesson should contain:
+- Learning objectives.
+- Short explanations.
+- Student-focused examples.
+- At least one worked example where appropriate.
+- A short quiz.
+- Feedback explaining correct answers.
+- Completion tracking.
+
+Store lesson content in a maintainable format, not hardcoded across UI components.
+
+Avoid claiming that completing a lesson qualifies the user as a financial professional.
+
+Do not present historical market performance as a guarantee of future results.
+
+---
+
+# 15. PAPER TRADING SIMULATOR
+
+Implement virtual investing as an educational simulation.
+
+Do not use real money or connect to brokerage execution APIs.
+
+Features:
+- Virtual starting balance.
+- Simulated portfolio.
+- Virtual buy and sell transactions.
+- Holdings.
+- Average purchase price.
+- Realized and unrealized profit/loss where the price data supports those calculations.
+- Transaction history.
+- Educational explanations.
+- Reset simulation with confirmation.
+
+Important requirements:
+
+- Clearly label all balances as virtual.
+- Do not misrepresent delayed or mock prices as live market data.
+- If no market-data provider is configured, use clearly labeled sample instruments and synthetic prices.
+- Never silently mix simulated prices with real market prices.
+- Do not allow negative quantities or unauthorized balance manipulation.
+- Perform portfolio calculations on the backend.
+- Protect virtual transaction records with user-level authorization.
+- Explain that simulated profits do not predict real investment performance.
+
+Use a provider abstraction if live or delayed market data is added later.
+
+---
+
+# 16. DATABASE DESIGN
+
+Design a normalized PostgreSQL schema with migrations.
+
+Consider these tables:
+
+- profiles
+- user_preferences
+- transactions
+- expense_categories
+- budgets
+- budget_category_limits
+- savings_goals
+- savings_contributions
+- notifications
+- chat_sessions
+- chat_messages
+- lessons
+- quizzes
+- quiz_questions
+- quiz_attempts
+- user_lesson_progress
+- loan_scenarios
+- simulation_accounts
+- simulation_transactions
+- simulation_holdings, if justified by the selected accounting model
+
+Use UUID primary keys where appropriate.
+
+Use foreign keys, constraints, indexes, timestamps, and deletion policies deliberately.
+
+For all user-owned financial data:
+- Enforce ownership checks.
+- Prevent cross-user access.
+- Validate all identifiers and inputs.
+- Use database transactions for related writes.
+- Use suitable unique constraints.
+- Index common user/date/category queries.
+- Avoid unnecessary duplication of derived financial totals.
+
+Financial totals should be derived from authoritative transactions or updated through a documented, tested strategy.
+
+Never trust user_id values supplied by the client without validating them against the authenticated identity.
+
+If using Supabase Row Level Security, enable and test suitable policies for exposed tables.
+
+If FastAPI accesses PostgreSQL through a privileged server connection, implement explicit authorization checks in every relevant service and endpoint. RLS is not a substitute for correct backend authorization.
+
+Never expose a database service key to the mobile client.
+
+Create reversible or forward-safe migration practices and document backup requirements.
+
+---
+
+# 17. BACKEND API DESIGN
+
+Use versioned endpoints under /api/v1.
+
+Implement endpoints for:
+
+## Health
+- GET /health
+- GET /api/v1/health/ready
+
+The readiness endpoint should not expose secrets or internal infrastructure details.
+
+## Profile
+- GET /api/v1/profile
+- PATCH /api/v1/profile
+
+## Transactions
+- GET /api/v1/transactions
+- POST /api/v1/transactions
+- GET /api/v1/transactions/{transaction_id}
+- PATCH /api/v1/transactions/{transaction_id}
+- DELETE /api/v1/transactions/{transaction_id}
+
+## Dashboard
+- GET /api/v1/dashboard/summary
+- GET /api/v1/dashboard/spending-breakdown
+- GET /api/v1/dashboard/trends
+
+## Budgets
+- GET /api/v1/budgets
+- POST /api/v1/budgets
+- GET /api/v1/budgets/{budget_id}
+- PATCH /api/v1/budgets/{budget_id}
+- DELETE /api/v1/budgets/{budget_id}
+
+## Savings goals
+- GET /api/v1/goals
+- POST /api/v1/goals
+- PATCH /api/v1/goals/{goal_id}
+- DELETE /api/v1/goals/{goal_id}
+- POST /api/v1/goals/{goal_id}/contributions
+
+## AI coach
+- POST /api/v1/coach/chat
+- GET /api/v1/coach/sessions
+- GET /api/v1/coach/sessions/{session_id}/messages
+- DELETE /api/v1/coach/sessions/{session_id}
+
+## Loan calculations
+- POST /api/v1/loans/calculate
+- POST /api/v1/loans/scenarios
+- GET /api/v1/loans/scenarios
+- DELETE /api/v1/loans/scenarios/{scenario_id}
+
+## Learning
+- GET /api/v1/lessons
+- GET /api/v1/lessons/{lesson_id}
+- POST /api/v1/lessons/{lesson_id}/quiz-attempts
+- GET /api/v1/learning/progress
+
+## Paper trading
+- GET /api/v1/simulation/account
+- GET /api/v1/simulation/holdings
+- GET /api/v1/simulation/transactions
+- POST /api/v1/simulation/orders
+- POST /api/v1/simulation/reset
+
+Follow REST conventions where appropriate.
+
+Return consistent error objects, appropriate HTTP status codes, and pagination metadata.
+
+Use Pydantic request and response schemas.
+
+Generate OpenAPI documentation through FastAPI.
+
+Do not create endpoints that are not connected to working functionality.
+
+---
+
+# 18. SECURITY AND PRIVACY
+
+Treat financial records and conversations as sensitive user data.
+
+Implement:
+
+- Authentication on protected routes.
+- Explicit authorization on every user-owned resource.
+- Input validation.
+- Parameterized database operations.
+- Rate limiting on expensive endpoints.
+- Request size limits.
+- Safe logging.
+- Secret management.
+- CORS restrictions for the actual deployment environment.
+- HTTPS in production.
+- Protection against common API abuse.
+- Dependency vulnerability checks.
+- Appropriate session handling.
+- Account deletion workflows.
+- Data export where feasible.
+- Privacy and AI data-use disclosures.
+- Configurable retention and deletion policies.
+- No unnecessary collection of financial or identity information.
+
+Never log passwords, access tokens, API keys, or complete financial conversation payloads.
+
+Do not store payment card details, bank passwords, UPI PINs, or OTPs.
+
+Do not assume that an AI provider's data retention policy is suitable. Review provider terms and configure available privacy controls appropriately.
+
+Before production deployment, review applicable Indian privacy, consumer protection, and financial regulations. Do not claim regulatory compliance without an actual review.
+
+---
+
+# 19. ERROR HANDLING AND OFFLINE BEHAVIOR
+
+Every screen that loads server data must support:
+
+- Loading state.
+- Empty state.
+- Success state.
+- Error state.
+- Retry action where appropriate.
+
+Use understandable messages.
+
+Do not display raw stack traces to users.
+
+Handle:
+- Network failures.
+- Authentication expiration.
+- Database errors.
+- AI provider outages.
+- Invalid input.
+- Duplicate submissions.
+- Missing resources.
+- Rate limits.
+- Unexpected API responses.
+
+Implement safe caching for read-only data where useful.
+
+Do not implement complex offline transaction synchronization unless conflict handling, duplicate prevention, and reconciliation are also implemented and tested.
+
+If offline expense entry is added, clearly indicate whether a transaction is saved locally or synchronized to the server.
+
+---
+
+# 20. TESTING REQUIREMENTS
+
+Write meaningful automated tests.
+
+## Backend tests
+
+Test:
+- Authentication and authorization.
+- Transaction creation and updates.
+- Transaction deletion.
+- Monthly expense aggregation.
+- Category totals.
+- Budget threshold calculations.
+- Savings-goal calculations.
+- Zero-interest loan calculations.
+- Standard EMI calculations.
+- Moratorium assumptions.
+- Invalid input.
+- Cross-user access prevention.
+- AI provider failure handling.
+- AI rate limits.
+- Paper trading balance and holdings calculations.
+- Duplicate submission behavior.
+
+Use isolated test data and mock external AI or market-data services.
+
+## Frontend tests
+
+Test:
+- Form validation.
+- Navigation.
+- Authentication state.
+- Expense creation.
+- Dashboard loading.
+- Empty states.
+- Error states.
+- Budget progress.
+- Loan calculator input and results.
+
+Avoid tests that pass only because they mock the entire feature without verifying meaningful application behavior.
+
+Add integration tests for critical workflows.
+
+Do not claim tests passed unless they were actually executed.
+
+---
+
+# 21. PERFORMANCE AND MAINTAINABILITY
+
+Use:
+- Modular backend services.
+- Clear separation of API, business logic, and database access.
+- Reusable frontend components.
+- Typed API clients.
+- Efficient database queries.
+- Pagination.
+- Database indexes.
+- Reasonable request timeouts.
+- Structured error handling.
+- Dependency injection where appropriate.
+
+Avoid:
+- Giant single-file components.
+- Repeating business logic in multiple screens.
+- Duplicating financial formulas across frontend and backend.
+- Unnecessary global state.
+- Excessive database queries.
+- Hardcoded secrets.
+- Fake API implementations in production paths.
+- Premature microservices.
+- Overengineering before the MVP works.
+
+Financial calculations should have a single authoritative implementation on the backend where appropriate.
+
+---
+
+# 22. PROJECT STRUCTURE
+
+Use a maintainable monorepo structure similar to:
+
+student-finance-mentor/
+    mobile/
+        app/
+        components/
+        features/
+        hooks/
+        services/
+        schemas/
+        store/
+        theme/
+        types/
+        tests/
+        assets/
+        package.json
+        app.json
+
+    backend/
+        app/
+            api/
+                v1/
+            core/
+            db/
+            models/
+            schemas/
+            services/
+            repositories/
+            integrations/
+            utils/
+            main.py
+        alembic/
+        tests/
+        pyproject.toml
+
+    docs/
+        architecture.md
+        database.md
+        api.md
+        security.md
+        deployment.md
+
+    .env.example
+    .gitignore
+    README.md
+
+Adjust the structure when a better maintainable alternative is justified, but keep frontend and backend responsibilities clearly separated.
+
+---
+
+# 23. ENVIRONMENT CONFIGURATION
+
+Create documented environment variable examples.
+
+Mobile environment:
+- EXPO_PUBLIC_SUPABASE_URL
+- EXPO_PUBLIC_SUPABASE_ANON_KEY
+- EXPO_PUBLIC_API_BASE_URL
+
+Backend environment:
+- DATABASE_URL
+- SUPABASE_URL
+- SUPABASE_JWT_SECRET or the appropriate supported JWT/JWKS verification configuration
+- OPENAI_API_KEY
+- OPENAI_MODEL
+- CORS_ORIGINS
+- ENVIRONMENT
+- LOG_LEVEL
+- RATE_LIMIT configuration
+
+Use the current supported Supabase token verification approach instead of assuming that every project uses the same JWT signing configuration.
+
+Use appropriate server-side configuration for database connection pooling.
+
+Never put server-only secrets in EXPO_PUBLIC variables.
+
+Provide .env.example files with placeholders, not real credentials.
+
+Validate required configuration during startup and return actionable configuration errors without exposing secrets.
+
+---
+
+# 24. IMPLEMENTATION PHASES
+
+Implement the project in phases.
+
+## PHASE 0: REPOSITORY AND ARCHITECTURE
+
+- Inspect the repository.
+- Identify existing frameworks and dependencies.
+- Document architecture decisions.
+- Initialize missing projects.
+- Configure linting, formatting, TypeScript strict mode, and testing.
+- Create environment examples.
+- Verify that frontend and backend start.
+
+## PHASE 1: FUNCTIONAL MVP
+
+Implement:
+- Authentication.
+- Onboarding.
+- Dashboard.
+- Expense management.
+- Categories.
+- Monthly budget.
+- Category budgets.
+- Savings goals.
+- Basic charts.
+- Empty and error states.
+- Database migrations.
+- Backend API.
+- Essential automated tests.
+
+At the end of this phase, a user must be able to register, add an expense, view updated totals, set a budget, and create a savings goal.
+
+All changes must persist in the database.
+
+## PHASE 2: AI MONEY COACH
+
+Implement:
+- Authenticated AI chat.
+- Context-aware financial explanations.
+- Hinglish support.
+- AI-assisted categorization.
+- Spending insights.
+- Rate limiting.
+- Failure handling.
+- Conversation controls.
+- Privacy safeguards.
+- Automated tests with a mocked provider.
+
+## PHASE 3: FINANCIAL EDUCATION
+
+Implement:
+- Lesson library.
+- Interactive lessons.
+- Quizzes.
+- Learning progress.
+- Compound-interest calculator.
+- Basic credit-score education.
+- Completion tracking.
+
+## PHASE 4: LOAN MANAGEMENT
+
+Implement:
+- Loan calculator.
+- EMI calculations.
+- Amortization schedule.
+- Moratorium scenarios.
+- Repayment comparisons.
+- Saved loan scenarios.
+- Tests for numerical accuracy.
+
+## PHASE 5: PAPER TRADING
+
+Implement:
+- Virtual account.
+- Virtual orders.
+- Holdings.
+- Portfolio calculations.
+- Transaction history.
+- Clearly labeled simulation data.
+- Reset functionality.
+- Tests against unauthorized balance manipulation.
+
+## PHASE 6: RELEASE READINESS
+
+Implement and verify:
+- Security review.
+- Account deletion.
+- Data export where supported.
+- Error monitoring.
+- Performance review.
+- Accessibility review.
+- Dependency audit.
+- Deployment configuration.
+- Backup and recovery documentation.
+- Production build instructions.
+- Release checklist.
+
+Do not skip foundational work just to display more screens.
+
+---
+
+# 25. REQUIRED DEVELOPER EXPERIENCE
+
+A developer must be able to clone the repository and understand how to run it.
+
+The README must explain:
+
+1. Prerequisites.
+2. Repository structure.
+3. Dependency installation.
+4. Supabase project setup.
+5. Environment configuration.
+6. Database migrations.
+7. Running the FastAPI server.
+8. Running the Expo application.
+9. Running tests.
+10. Configuring the OpenAI API.
+11. Building the mobile application.
+12. Deployment.
+13. Known limitations.
+
+Provide exact commands appropriate to the chosen setup.
+
+Make the application usable on a physical Android device as well as an emulator, subject to configuration.
+
+Document how the mobile application reaches the backend in local development.
+
+Do not assume that localhost on an Android phone points to the developer's computer.
+
+---
+
+# 26. ACCEPTANCE CRITERIA
+
+The MVP is complete only when all the following conditions have been verified:
+
+1. The mobile application launches without a fatal runtime error.
+2. Registration and login work with the configured authentication provider.
+3. A user's session persists appropriately.
+4. Protected screens require authentication.
+5. A user can create, edit, view, and delete their transactions.
+6. Transaction changes persist after restarting the application.
+7. Dashboard totals match the underlying transaction records.
+8. Category totals are correct.
+9. Monthly budgets calculate correctly.
+10. Budget threshold alerts do not repeatedly fire for the same crossing.
+11. Savings goals calculate progress correctly.
+12. Another user cannot read or modify the current user's financial records.
+13. Forms validate invalid inputs.
+14. Network and API errors have understandable UI states.
+15. No real API keys are committed to source control.
+16. Loan calculations, when implemented, pass numerical tests.
+17. AI responses, when implemented, come from the configured backend integration or return an explicit error.
+18. The application does not fabricate live prices, bank balances, or completed actions.
+19. Automated tests run successfully in the documented environment.
+20. The README contains working setup instructions.
+
+Clearly identify any acceptance criteria that could not be verified.
+
+---
+
+# 27. HOW YOU MUST WORK
+
+Follow this execution protocol.
+
+1. Inspect the repository and report its current state.
+2. Identify any blockers.
+3. Produce a concise implementation plan.
+4. Initialize or repair the project structure.
+5. Implement Phase 1 completely.
+6. Run the application and automated tests.
+7. Fix the errors found.
+8. Verify the acceptance criteria.
+9. Document the completed work.
+10. Proceed to Phase 2 and later phases only after the foundational implementation is stable.
+
+When you have direct access to repository files and a terminal, create and modify the actual files instead of merely printing code snippets.
+
+Do not stop after generating a plan.
+
+Do not replace implementation with pseudocode.
+
+Do not claim that deployment, authentication, database persistence, or API integration works without verification.
+
+If credentials are missing, implement the integration and provide exact setup instructions. Do not invent credentials or pretend the external service is connected.
+
+If execution time or context is limited, finish a coherent, testable phase rather than creating incomplete versions of every module.
+
+At the end of each phase, report:
+
+- Features implemented.
+- Important files created or changed.
+- Commands executed.
+- Tests executed and their actual results.
+- Configuration still required.
+- Known limitations.
+- Next recommended action.
+
+Start by inspecting the repository and implementing PHASE 0, followed by PHASE 1.
+
+The immediate objective is a reliable, polished, genuinely functional MVP for Indian college students—not a collection of attractive mockup screens.
