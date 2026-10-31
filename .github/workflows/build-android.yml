@@ -1,4 +1,4 @@
-
+```yaml
 name: Bindora Android APK Build
 
 on:
@@ -24,6 +24,21 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      - name: Generate Debug Keystore
+        run: |
+          keytool -genkeypair -v \
+            -keystore debug.keystore \
+            -storepass android \
+            -alias androiddebugkey \
+            -keypass android \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=US"
+
+      - name: Verify Debug Keystore
+        run: ls -lh debug.keystore
+
       - name: Install Gradle
         uses: gradle/actions/setup-gradle@v6
         with:
@@ -42,4 +57,4 @@ jobs:
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
           retention-days: 7
-
+```
